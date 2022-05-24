@@ -57,8 +57,8 @@ powers = {
 
 def power_shift(val: int) -> tuple:
     """
-    shift amount right by 1000
-    returns the shifted amount (right part) and remainder (left part)
+    Shift amount right by 1000 to build the triplets
+
     :param val: source amount to shift
     :return: a tuple of right part and remainder
     """
@@ -68,6 +68,7 @@ def power_shift(val: int) -> tuple:
 def to_words(amt: int) -> string:
     """
     given the amount 0..999 return string in words
+
     :param amt: value to transcribe into words
     :return: a string, representing value in words
     """
@@ -86,7 +87,8 @@ def convert_whole(whole_amt: int) -> string:
     FIXME: Treating whole part different from decimal
     We want to identify the power triplets in the amount, e.g. 12_345_678
     would have 3 tripplets for millions, thousands and ones.
-    We do it by shifting amount in 1000s, calling power_shift()
+    We do it by shifting amount in 1000s, calling `power_shift()`
+
     :param whole_amt: amount to convert
     :return: string, representing value in words
     """
