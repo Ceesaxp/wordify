@@ -55,14 +55,22 @@ powers = {
 }
 
 
-# shift amount right by 1000
-# returns the shifted amount (right part) and remainder (left part)
 def power_shift(val: int) -> tuple:
+    """
+    shift amount right by 1000
+    returns the shifted amount (right part) and remainder (left part)
+    :param val: source amount to shift
+    :return: a tuple of right part and remainder
+    """
     return (val % 1000, int(val / 1000))
 
 
-# given the amount 0..999 return string in words
 def to_words(amt: int) -> string:
+    """
+    given the amount 0..999 return string in words
+    :param amt: value to transcribe into words
+    :return: a string, representing value in words
+    """
     if amt > 99:
         return to_words(int(amt/100)) + ' hundred' + to_words(int(amt % 100))
     elif amt > 19:
@@ -73,11 +81,15 @@ def to_words(amt: int) -> string:
         return ones[amt]
 
 
-# treating whole part different from decimal
 def convert_whole(whole_amt: int) -> string:
-    # we want to identify the power triplets in the amount
-    # e.g. 12_345_678 would have 3 tripplets for millions, thousands and ones
-    # we do it by shifting amount in 1000s
+    """
+    FIXME: Treating whole part different from decimal
+    We want to identify the power triplets in the amount, e.g. 12_345_678
+    would have 3 tripplets for millions, thousands and ones.
+    We do it by shifting amount in 1000s, calling power_shift()
+    :param whole_amt: amount to convert
+    :return: string, representing value in words
+    """
     triplets = []
     num_part, whole_amt = power_shift(whole_amt)
     while num_part > 0:
@@ -97,14 +109,18 @@ def convert_whole(whole_amt: int) -> string:
     return amount_in_words
 
 
-def main():
-    ccy = '¤'
+def main() -> int:
+    ccy = '¤'  # universal currency symbol
+
+    # quickly parse the command line
     if len(sys.argv) < 2:
         print("Must provide at least amount")
         sys.exit(0)
     elif len(sys.argv) == 2:
+        # only amount given
         amount = float(sys.argv[1])
     else:
+        # amount + currency name is expected
         ccy = sys.argv[1]
         amount = float(sys.argv[2])
 
@@ -113,6 +129,9 @@ def main():
     fraction = int((amount * 100) % 100)
 
     print(convert_whole(whole) + ccy + ' and' + to_words(fraction))
+    return 0
 
 
-main()
+# called as script
+if __name__ == '__main__':
+    sys.exit(main())
