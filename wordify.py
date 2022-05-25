@@ -1,8 +1,15 @@
+#!/usr/bin/env python3
 import string
 import sys
 
+"""
+# Number Name Dictionaries
 
-# dictionaries
+These should be linked to languages and sourced with language token.
+For now we keep them all to English
+"""
+hunderd = ' hundred'
+
 ones = {
     0: 'naught',
     1: 'one',
@@ -55,25 +62,32 @@ powers = {
 }
 
 
-def power_shift(val: int) -> tuple:
+def power_shift(val: int, pw: int = 3) -> tuple:
     """
-    Shift amount right by 1000 to build the triplets
+    Shift `val` right by 10^pw to build the numeric sets ("powers").
+    In some countries these are not, necesserily, 10^3, hence may need
+    to adjust for universality.
 
     :param val: source amount to shift
+    :param pw: power of 10 to be used for shifting
     :return: a tuple of right part and remainder
     """
-    return (val % 1000, int(val / 1000))
+    return (val % (10 ** pw), int(val / (10 ** pw)))
 
 
 def to_words(amt: int) -> string:
     """
-    given the amount 0..999 return string in words
+    Given the `amt` 0..999 return string in words.
+
+    The function assumes that we only work within a 0..999 range, may
+    need to adjust for a few countries where ranges differ, but none (?)
+    are going above the 999 bound.
 
     :param amt: value to transcribe into words
     :return: a string, representing value in words
     """
     if amt > 99:
-        return to_words(int(amt/100)) + ' hundred' + to_words(int(amt % 100))
+        return to_words(int(amt/100)) + hunderd + to_words(int(amt % 100))
     elif amt > 19:
         return ' ' + tens[int(amt/10)] + to_words(int(amt % 10))
     elif amt > 9:
@@ -84,7 +98,8 @@ def to_words(amt: int) -> string:
 
 def convert_whole(whole_amt: int) -> string:
     """
-    FIXME: Treating whole part different from decimal
+    FIXME: Should we keep treating whole part different from decimal?
+
     We want to identify the power triplets in the amount, e.g. 12_345_678
     would have 3 tripplets for millions, thousands and ones.
     We do it by shifting amount in 1000s, calling `power_shift()`
@@ -120,11 +135,11 @@ def main() -> int:
         sys.exit(0)
     elif len(sys.argv) == 2:
         # only amount given
-        amount = float(sys.argv[1])
+        amount = sys.argv[1]
     else:
         # amount + currency name is expected
         ccy = sys.argv[1]
-        amount = float(sys.argv[2])
+        amount = sys.argv[2]
 
     # first we split fractional and whole part
     whole = int(amount)
