@@ -11,7 +11,7 @@ def hundred(lang: string = 'en') -> string:
     """
     lang_hundred = {
         'en': ' hundred',
-        'ru': 'сот'
+        'ru': '!сто'
     }
     return lang_hundred[lang]
 
@@ -202,7 +202,7 @@ def to_words(amt: int, lang: string = 'en') -> string:
     :return: a string, representing value in words in `lang` language
     """
     if amt > 99:
-        return to_words(int(amt/100), lang) + hundred() + to_words(int(amt % 100), lang)
+        return to_words(int(amt/100), lang) + hundred(lang) + to_words(int(amt % 100), lang)
     elif amt > 19:
         return ' ' + tens(int(amt/10), lang) + to_words(int(amt % 10), lang)
     elif amt > 9:
@@ -251,6 +251,21 @@ def convert_whole(whole_amt: int, lang: string = 'en') -> string:
     return amount_in_words
 
 
+def join_parts(lang: string = 'en') -> string:
+    """
+    Proper conjunction to use to join whole and fractional parts for the `lang` language
+
+    :param lang:
+    :return:
+    """
+    if lang == 'en':
+        return ' and'
+    elif lang == 'ru':
+        return ' и'
+    else:
+        return ''
+
+
 def main() -> int:
     ccy = '¤'  # universal currency symbol
     lang = 'en'
@@ -276,7 +291,7 @@ def main() -> int:
         return 0
 
     # check that we support the language, fallback to English
-    if lang != 'en' or lang != 'ru':
+    if lang not in ['ru', 'en']:
         print(f'I do not know how to speak {lang}, falling back to English.')
         lang = 'en'
 
@@ -284,7 +299,7 @@ def main() -> int:
     whole = int(amount)
     fraction = int((amount * 100) % 100)
 
-    print(convert_whole(whole, lang) + ccy + ' and' + to_words(fraction, lang))
+    print(convert_whole(whole, lang) + ccy + join_parts(lang) + to_words(fraction, lang))
     return 0
 
 
