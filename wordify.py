@@ -20,7 +20,7 @@ def powers(pw: int, lang: string = 'en') -> string:
     """
     Provide names for power tripplets.
 
-    :param lang:
+    :param lang: language to use
     :param pw: sequence order for the tripplet
     :return: power triplet name
     """
