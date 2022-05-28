@@ -3,119 +3,174 @@ import string
 import sys
 
 
-def hundred():
+def hundred(lang: string = 'en') -> string:
     """
     Shorthand for 'hundred' word
 
     :return: a constant -- word for 'hundred'
     """
-    return ' hundred'
+    lang_hundred = {
+        'en': ' hundred',
+        'ru': 'сот'
+    }
+    return lang_hundred[lang]
 
 
-def powers(pw: int) -> string:
+def powers(pw: int, lang: string = 'en') -> string:
     """
     Provide names for power tripplets.
 
     :param pw: sequence order for the tripplet
     :return: power triplet name
     """
-    en_powers = {
-        0: '',  # 10^0
-        1: 'thousand',  # 10^3
-        2: 'million',  # 10^6
-        3: 'billion',  # 10^9
-        4: 'trillion',  # 10^12
-        5: 'quadrillion',  # 10^15
-        6: 'quintillion',  # 10^18
-        7: 'sextillion',  # 10^21
-        8: 'septillion',  # 10^24
+    lang_powers = {
+        'en':
+            {
+                0: '',  # 10^0
+                1: 'thousand',  # 10^3
+                2: 'million',  # 10^6
+                3: 'billion',  # 10^9
+                4: 'trillion',  # 10^12
+                5: 'quadrillion',  # 10^15
+                6: 'quintillion',  # 10^18
+                7: 'sextillion',  # 10^21
+                8: 'septillion',  # 10^24
+             },
+        'ru':
+            {
+                0: '',  # 10^0
+                1: 'тысяча',  # 10^3
+                2: 'миллион',  # 10^6
+                3: 'миллиард',  # 10^9
+                4: 'триллион',  # 10^12
+                5: 'квадриллион',  # 10^15
+                6: 'квинтиллион',  # 10^18
+                7: 'секстиллион',  # 10^21
+                8: 'септиллион',  # 10^24
+            }
     }
 
-    if pw > 8:
-        return "TOO MUCH"
-    elif pw > 0:
-        return en_powers[pw]
+    if pw >= 0 and pw < 9:
+        return lang_powers[lang][pw]
     else:
-        print("Value cannot be negative")
+        print(f"Value {pw} is out of range")
         sys.exit(0)
 
 
-def ones(amt: int) -> string:
+def ones(amt: int, lang: string = 'en') -> string:
     """
     Given amount `amt` return a word associated with the value.
 
     :param amt:
     :return: numeral in words
     """
-    en_ones = {
-        0: 'naught',
-        1: 'one',
-        2: 'two',
-        3: 'three',
-        4: 'four',
-        5: 'five',
-        6: 'six',
-        7: 'seven',
-        8: 'eight',
-        9: 'nine',
+    lang_ones = {
+        'en':
+            {0: 'naught',
+             1: 'one',
+             2: 'two',
+             3: 'three',
+             4: 'four',
+             5: 'five',
+             6: 'six',
+             7: 'seven',
+             8: 'eight',
+             9: 'nine', },
+        'ru':
+            {0: 'ноль',
+             1: 'один',
+             2: 'два',
+             3: 'три',
+             4: 'четыре',
+             5: 'пять',
+             6: 'шесть',
+             7: 'семь',
+             8: 'восемь',
+             9: 'девять',},
     }
 
     if amt >=0 and amt <=9:
-        return en_ones[amt]
+        return lang_ones[lang][amt]
     else:
         print(f"Value {amt} is out of range")
         sys.exit(0)
 
 
-def tens(amt: int) -> string:
+def tens(amt: int, lang: string = 'en') -> string:
     """
     Given amount `amt` return the name for 'tens'.
 
     :param amt: index of the 'ten'
     :return: string, representing the 'tens' name
     """
-    en_tens = {
-        0: '',
-        1: 'teen',
-        2: 'twenty-',
-        3: 'thirty-',
-        4: 'forty-',
-        5: 'fifty-',
-        6: 'sixty-',
-        7: 'seventy-',
-        8: 'eighty-',
-        9: 'ninety-'
+    lang_tens = {
+        'en': {
+            0: '',
+            1: '*teen',
+            2: 'twenty-',
+            3: 'thirty-',
+            4: 'forty-',
+            5: 'fifty-',
+            6: 'sixty-',
+            7: 'seventy-',
+            8: 'eighty-',
+            9: 'ninety-'
+        },
+        'ru': {
+            0: '',
+            1: '*надцать',
+            2: 'двадцать ',
+            3: 'тридцать ',
+            4: 'сорок ',
+            5: 'пятьдесят ',
+            6: 'шестьдесят ',
+            7: 'семьдесят ',
+            8: 'восемьдесят ',
+            9: 'девяносто '
+        },
     }
 
-    if amt >= 0 and amt <= 9:
-        return en_tens[amt]
+    if amt > 0 and amt <= 9:
+        return lang_tens[lang][amt]
     else:
         print(f"Value {amt} is out of range")
         sys.exit(0)
 
 
-def teens(amt: int) -> string:
+def teens(amt: int, lang: string = 'en') -> string:
     """
     Given amount `amt` extract the 10-19 (teen) name.
 
     :param amt: amount in the range of 10-19
     :return: 'teens' name in words
     """
-    en_teens = {
-        10: 'ten',
-        11: 'eleven',
-        12: 'twelve',
-        13: 'thirteen',
-        14: 'fourteen',
-        15: 'fifteen',
-        16: 'sixteen',
-        17: 'seventeen',
-        18: 'eighteen',
-        19: 'nineteen',
+    lang_teens = {
+        'en':
+            {10: 'ten',
+             11: 'eleven',
+             12: 'twelve',
+             13: 'thirteen',
+             14: 'fourteen',
+             15: 'fifteen',
+             16: 'sixteen',
+             17: 'seventeen',
+             18: 'eighteen',
+             19: 'nineteen', },
+        'ru' :
+            {10: 'десять',
+             11: 'одинадцать',
+             12: 'двенадцать',
+             13: 'тринадцать',
+             14: 'четырнадцать',
+             15: 'пятнадцать',
+             16: 'шестнадцать',
+             17: 'семнадцать',
+             18: 'восемнадцать',
+             19: 'девятнадцать', },
     }
 
     if amt >= 10 and amt <= 19:
-        return en_teens[amt]
+        return lang_teens[lang][amt]
     else:
         print(f"Value {amt} is out of range")
         sys.exit(0)
@@ -147,16 +202,30 @@ def to_words(amt: int, lang: string = 'en') -> string:
     :return: a string, representing value in words in `lang` language
     """
     if amt > 99:
-        return to_words(int(amt/100)) + hundred() + to_words(int(amt % 100))
+        return to_words(int(amt/100), lang) + hundred() + to_words(int(amt % 100), lang)
     elif amt > 19:
-        return ' ' + tens(int(amt/10)) + to_words(int(amt % 10))
+        return ' ' + tens(int(amt/10), lang) + to_words(int(amt % 10), lang)
     elif amt > 9:
-        return ' ' + teens(amt)
+        return ' ' + teens(amt, lang)
     else:
-        return ones(amt)
+        return ones(amt, lang)
 
 
-def convert_whole(whole_amt: int) -> string:
+def and_func(i, lang: string = 'en'):
+    """
+    Silly 'and' beautifier for some languages.
+
+    :param i: index
+    :param lang: language
+    :return: blank or 'and'
+    """
+    if lang == 'en' and i == 0:
+        return 'and '
+    else:
+        return ''
+
+
+def convert_whole(whole_amt: int, lang: string = 'en') -> string:
     """
     FIXME: Should we keep treating whole part different from decimal?
 
@@ -174,38 +243,48 @@ def convert_whole(whole_amt: int) -> string:
         num_part, whole_amt = power_shift(whole_amt)
 
     amount_in_words = ''
-    for i in range(0, len(triplets)):
-        if i == 0:
-            and_and = 'and '
-        else:
-            and_and = ''
 
-        amount_in_words = and_and + to_words(
-            triplets[i]) + ' ' + powers(i) + ' ' + amount_in_words
+    for i in range(0, len(triplets)):
+        amount_in_words = and_func(i, lang) + to_words(
+            triplets[i], lang) + ' ' + powers(i, lang) + ' ' + amount_in_words
 
     return amount_in_words
 
 
 def main() -> int:
     ccy = '¤'  # universal currency symbol
+    lang = 'en'
 
-    # quickly parse the command line
+    # quick & dirty parsing of the command line params
     if len(sys.argv) < 2:
         print("Must provide at least an amount")
         sys.exit(0)
     elif len(sys.argv) == 2:
         # only amount given
         amount = float(sys.argv[1])
-    else:
-        # amount + currency name is expected
+    elif len(sys.argv) == 3:
+        # amount + currency name are expected
         ccy = sys.argv[1]
         amount = float(sys.argv[2])
+    elif len(sys.argv) == 4:
+        # amount + currency name + language are expected
+        ccy = sys.argv[1]
+        amount = float(sys.argv[2])
+        lang = sys.argv[3]
+    else:
+        print("Not sure what you want from me :(")
+        return 0
+
+    # check that we support the language, fallback to English
+    if lang != 'en' or lang != 'ru':
+        print(f'I do not know how to speak {lang}, falling back to English.')
+        lang = 'en'
 
     # first we split fractional and whole part
     whole = int(amount)
     fraction = int((amount * 100) % 100)
 
-    print(convert_whole(whole) + ccy + ' and' + to_words(fraction))
+    print(convert_whole(whole, lang) + ccy + ' and' + to_words(fraction, lang))
     return 0
 
 
