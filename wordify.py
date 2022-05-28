@@ -4,6 +4,11 @@ import sys
 
 
 def hundred():
+    """
+    Shorthand for 'hundred' word
+
+    :return: a constant -- word for 'hundred'
+    """
     return ' hundred'
 
 
@@ -142,7 +147,7 @@ def to_words(amt: int, lang: string = 'en') -> string:
     :return: a string, representing value in words in `lang` language
     """
     if amt > 99:
-        return to_words(int(amt/100)) + hundred + to_words(int(amt % 100))
+        return to_words(int(amt/100)) + hundred() + to_words(int(amt % 100))
     elif amt > 19:
         return ' ' + tens(int(amt/10)) + to_words(int(amt % 10))
     elif amt > 9:
