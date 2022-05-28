@@ -2,64 +2,118 @@
 import string
 import sys
 
-"""
-# Number Name Dictionaries
 
-These should be linked to languages and sourced with language token.
-For now we keep them all to English
-"""
-hundred = ' hundred'
+def hundred():
+    return ' hundred'
 
-ones = {
-    0: 'naught',
-    1: 'one',
-    2: 'two',
-    3: 'three',
-    4: 'four',
-    5: 'five',
-    6: 'six',
-    7: 'seven',
-    8: 'eight',
-    9: 'nine',
-}
 
-teens = {
-    10: 'ten',
-    11: 'eleven',
-    12: 'twelve',
-    13: 'thirteen',
-    14: 'fourteen',
-    15: 'fifteen',
-    16: 'sixteen',
-    17: 'seventeen',
-    18: 'eighteen',
-    19: 'nineteen',
-}
+def powers(pw: int) -> string:
+    """
+    Provide names for power tripplets.
 
-tens = {
-    0: '',
-    1: 'teen',
-    2: 'twenty-',
-    3: 'thirty-',
-    4: 'forty-',
-    5: 'fifty-',
-    6: 'sixty-',
-    7: 'seventy-',
-    8: 'eighty-',
-    9: 'ninety-'
-}
+    :param pw: sequence order for the tripplet
+    :return: power triplet name
+    """
+    en_powers = {
+        0: '',  # 10^0
+        1: 'thousand',  # 10^3
+        2: 'million',  # 10^6
+        3: 'billion',  # 10^9
+        4: 'trillion',  # 10^12
+        5: 'quadrillion',  # 10^15
+        6: 'quintillion',  # 10^18
+        7: 'sextillion',  # 10^21
+        8: 'septillion',  # 10^24
+    }
 
-powers = {
-    0: '',             # 10^0
-    1: 'thousand',     # 10^3
-    2: 'million',      # 10^6
-    3: 'billion',      # 10^9
-    4: 'trillion',     # 10^12
-    5: 'quadrillion',  # 10^15
-    6: 'quintillion',  # 10^18
-    7: 'sextillion',   # 10^21
-    8: 'septillion',   # 10^24
-}
+    if pw > 8:
+        return "TOO MUCH"
+    elif pw > 0:
+        return en_powers[pw]
+    else:
+        print("Value cannot be negative")
+        sys.exit(0)
+
+
+def ones(amt: int) -> string:
+    """
+    Given amount `amt` return a word associated with the value.
+
+    :param amt:
+    :return: numeral in words
+    """
+    en_ones = {
+        0: 'naught',
+        1: 'one',
+        2: 'two',
+        3: 'three',
+        4: 'four',
+        5: 'five',
+        6: 'six',
+        7: 'seven',
+        8: 'eight',
+        9: 'nine',
+    }
+
+    if amt >=0 and amt <=9:
+        return en_ones[amt]
+    else:
+        print(f"Value {amt} is out of range")
+        sys.exit(0)
+
+
+def tens(amt: int) -> string:
+    """
+    Given amount `amt` return the name for 'tens'.
+
+    :param amt: index of the 'ten'
+    :return: string, representing the 'tens' name
+    """
+    en_tens = {
+        0: '',
+        1: 'teen',
+        2: 'twenty-',
+        3: 'thirty-',
+        4: 'forty-',
+        5: 'fifty-',
+        6: 'sixty-',
+        7: 'seventy-',
+        8: 'eighty-',
+        9: 'ninety-'
+    }
+
+    if amt >= 0 and amt <= 9:
+        return en_tens[amt]
+    else:
+        print(f"Value {amt} is out of range")
+        sys.exit(0)
+
+
+def teens(amt: int) -> string:
+    """
+    Given amount `amt` extract the 10-19 (teen) name.
+
+    :param amt: amount in the range of 10-19
+    :return: 'teens' name in words
+    """
+    en_teens = {
+        10: 'ten',
+        11: 'eleven',
+        12: 'twelve',
+        13: 'thirteen',
+        14: 'fourteen',
+        15: 'fifteen',
+        16: 'sixteen',
+        17: 'seventeen',
+        18: 'eighteen',
+        19: 'nineteen',
+    }
+
+    if amt >= 10 and amt <= 19:
+        return en_teens[amt]
+    else:
+        print(f"Value {amt} is out of range")
+        sys.exit(0)
 
 
 def power_shift(val: int, pw: int = 3) -> tuple:
@@ -75,7 +129,7 @@ def power_shift(val: int, pw: int = 3) -> tuple:
     return val % (10 ** pw), int(val / (10 ** pw))
 
 
-def to_words(amt: int) -> string:
+def to_words(amt: int, lang: string = 'en') -> string:
     """
     Given the `amt` 0..999 return string in words.
 
@@ -84,16 +138,17 @@ def to_words(amt: int) -> string:
     are going above the 999 bound.
 
     :param amt: value to transcribe into words
-    :return: a string, representing value in words
+    :param lang: language to use for translation
+    :return: a string, representing value in words in `lang` language
     """
     if amt > 99:
         return to_words(int(amt/100)) + hundred + to_words(int(amt % 100))
     elif amt > 19:
-        return ' ' + tens[int(amt/10)] + to_words(int(amt % 10))
+        return ' ' + tens(int(amt/10)) + to_words(int(amt % 10))
     elif amt > 9:
-        return ' ' + teens[amt]
+        return ' ' + teens(amt)
     else:
-        return ones[amt]
+        return ones(amt)
 
 
 def convert_whole(whole_amt: int) -> string:
@@ -121,7 +176,7 @@ def convert_whole(whole_amt: int) -> string:
             and_and = ''
 
         amount_in_words = and_and + to_words(
-            triplets[i]) + ' ' + powers[i] + ' ' + amount_in_words
+            triplets[i]) + ' ' + powers(i) + ' ' + amount_in_words
 
     return amount_in_words
 
@@ -131,7 +186,7 @@ def main() -> int:
 
     # quickly parse the command line
     if len(sys.argv) < 2:
-        print("Must provide at least amount")
+        print("Must provide at least an amount")
         sys.exit(0)
     elif len(sys.argv) == 2:
         # only amount given
