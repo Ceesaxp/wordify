@@ -20,6 +20,7 @@ def powers(pw: int, lang: string = 'en') -> string:
     """
     Provide names for power tripplets.
 
+    :param lang:
     :param pw: sequence order for the tripplet
     :return: power triplet name
     """
@@ -35,7 +36,7 @@ def powers(pw: int, lang: string = 'en') -> string:
                 6: 'quintillion',  # 10^18
                 7: 'sextillion',  # 10^21
                 8: 'septillion',  # 10^24
-             },
+            },
         'ru':
             {
                 0: '',  # 10^0
@@ -50,7 +51,7 @@ def powers(pw: int, lang: string = 'en') -> string:
             }
     }
 
-    if pw >= 0 and pw < 9:
+    if 0 <= pw < 9:
         return lang_powers[lang][pw]
     else:
         print(f"Value {pw} is out of range")
@@ -61,6 +62,7 @@ def ones(amt: int, lang: string = 'en') -> string:
     """
     Given amount `amt` return a word associated with the value.
 
+    :param lang:
     :param amt:
     :return: numeral in words
     """
@@ -86,10 +88,10 @@ def ones(amt: int, lang: string = 'en') -> string:
              6: 'шесть',
              7: 'семь',
              8: 'восемь',
-             9: 'девять',},
+             9: 'девять', },
     }
 
-    if amt >=0 and amt <=9:
+    if 0 <= amt <= 9:
         return lang_ones[lang][amt]
     else:
         print(f"Value {amt} is out of range")
@@ -100,6 +102,7 @@ def tens(amt: int, lang: string = 'en') -> string:
     """
     Given amount `amt` return the name for 'tens'.
 
+    :param lang:
     :param amt: index of the 'ten'
     :return: string, representing the 'tens' name
     """
@@ -130,7 +133,7 @@ def tens(amt: int, lang: string = 'en') -> string:
         },
     }
 
-    if amt > 0 and amt <= 9:
+    if 0 < amt <= 9:
         return lang_tens[lang][amt]
     else:
         print(f"Value {amt} is out of range")
@@ -141,6 +144,7 @@ def teens(amt: int, lang: string = 'en') -> string:
     """
     Given amount `amt` extract the 10-19 (teen) name.
 
+    :param lang:
     :param amt: amount in the range of 10-19
     :return: 'teens' name in words
     """
@@ -156,7 +160,7 @@ def teens(amt: int, lang: string = 'en') -> string:
              17: 'seventeen',
              18: 'eighteen',
              19: 'nineteen', },
-        'ru' :
+        'ru':
             {10: 'десять',
              11: 'одинадцать',
              12: 'двенадцать',
@@ -169,7 +173,7 @@ def teens(amt: int, lang: string = 'en') -> string:
              19: 'девятнадцать', },
     }
 
-    if amt >= 10 and amt <= 19:
+    if 10 <= amt <= 19:
         return lang_teens[lang][amt]
     else:
         print(f"Value {amt} is out of range")
@@ -202,9 +206,9 @@ def to_words(amt: int, lang: string = 'en') -> string:
     :return: a string, representing value in words in `lang` language
     """
     if amt > 99:
-        return to_words(int(amt/100), lang) + hundred(lang) + to_words(int(amt % 100), lang)
+        return to_words(int(amt / 100), lang) + hundred(lang) + to_words(int(amt % 100), lang)
     elif amt > 19:
-        return ' ' + tens(int(amt/10), lang) + to_words(int(amt % 10), lang)
+        return ' ' + tens(int(amt / 10), lang) + to_words(int(amt % 10), lang)
     elif amt > 9:
         return ' ' + teens(amt, lang)
     else:
@@ -233,6 +237,7 @@ def convert_whole(whole_amt: int, lang: string = 'en') -> string:
     would have 3 tripplets for millions, thousands and ones.
     We do it by shifting amount in 1000s, calling `power_shift()`
 
+    :param lang:
     :param whole_amt: amount to convert
     :return: string, representing value in words
     """
